@@ -1,0 +1,37 @@
+#import libraries
+import pandas as pd
+import numpy as np
+pd.set_option("display.max_colwidth", None)
+
+#1.Fazer download do dataset Top Youtube Artists, do Kaggle. 
+df = pd.read_csv('topyoutube.csv')
+
+#show first entries
+df.head()
+
+#show data types
+print(df.dtypes)
+
+#check for missing data
+(df.isnull().sum() / df.shape[0]).sort_values(ascending=False)
+
+#2. Tratar as colunas sem informação adicionando o texto “Não informado”.
+df=df.fillna('Não informado')
+
+#check if data has been completed with new info
+(df.isnull().sum() / df.shape[0]).sort_values(ascending=False)
+
+#3.Formatar a coluna de total de inscritos multiplicando por 100 milhões.
+df['Total Subs']=df['100M']*100000000
+
+#4.Formatar coluna “AVG” para 2 casas decimais depois da vírgula.
+df['Avg']=df['Avg'].round(2)
+
+#5.Mostrar os top 10 usuários.
+df.sort_values(by='Total Subs',ascending=False)
+
+#6.Mostrar primeiros 100 usuários por nome decrescente.
+df.sort_values(by='Artist')
+
+#7. Salvar um novo CSV com a informação tratada.
+df.to_csv('topyoutube_new.csv')
