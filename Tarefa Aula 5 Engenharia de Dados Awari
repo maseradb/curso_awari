@@ -4,7 +4,7 @@ import numpy as np
 pd.set_option("display.max_colwidth", None)
 
 #1.Fazer download do dataset Top Youtube Artists, do Kaggle. 
-df = pd.read_csv('topyoutube.csv')
+df = pd.read_csv('topyoutube.csv', thousands=',')
 
 #show first entries
 df.head()
@@ -28,10 +28,10 @@ df['Total Subs']=df['100M']*100000000
 df['Avg']=df['Avg'].round(2)
 
 #5.Mostrar os top 10 usuários.
-df.sort_values(by='Total Subs',ascending=False)
+df_top10 = df.sort_values(by='Total Views',ascending=False).head(10)
 
 #6.Mostrar primeiros 100 usuários por nome decrescente.
-df.sort_values(by='Artist')
+df_top100 = df.sort_values(by='Artist',ascending=False).head(100)
 
 #7. Salvar um novo CSV com a informação tratada.
 df.to_csv('topyoutube_new.csv')
